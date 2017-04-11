@@ -10,16 +10,20 @@ def getstockurl(number):
     return url
 
 
-def main():
-    url = getstockurl(input("->请输入一个正确的股票代码："))
+def gettitle(number):
+    url=getstockurl(number)
     response = urllib.request.urlopen(url)
     html = response.read()
     bsobj = BeautifulSoup(html, "html.parser")
     title = bsobj.find("a", href=re.compile(
-        "ttp://stockpage.10jqka.com.cn/.+/")).strong
+        "ttp://stockpage.10jqka.com.cn/.+/")).strong.get_text()
+    return title
+# def getvale(number):
 
-    print(title.get_text())
 
+def main():
+    number = input("->请输入一个正确的股票代码：")
+    print(gettitle(number))
 
 if __name__ == "__main__":
     main()
