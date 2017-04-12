@@ -3,6 +3,7 @@ import urllib.request
 import urllib.parse
 from bs4 import BeautifulSoup
 import re
+import getstockvalue
 
 
 def getstockurl(number):
@@ -11,7 +12,7 @@ def getstockurl(number):
 
 
 def gettitle(number):
-    url=getstockurl(number)
+    url = getstockurl(number)
     response = urllib.request.urlopen(url)
     html = response.read()
     bsobj = BeautifulSoup(html, "html.parser")
@@ -23,7 +24,7 @@ def gettitle(number):
 
 def main():
     number = input("->请输入一个正确的股票代码：")
-    print(gettitle(number))
-
+    print('=' * 84 + '\n' + "|股票名称：{:^72}".format(gettitle(number)))
+    getstockvalue.getstockvalue(number)
 if __name__ == "__main__":
     main()
