@@ -23,8 +23,21 @@ def gettitle(number):
 
 
 def main():
-    number = input("->请输入一个正确的股票代码：")
-    print('=' * 84 + '\n' + "|股票名称：{:^72}".format(gettitle(number)))
-    getstockvalue.getstockvalue(number)
+    i = 1
+    while i == 1:
+        try:
+            number = input("->请输入一个正确的股票代码：")
+            if str(number).isdigit():
+                print('=' * 84 + '\n' +
+                      "|股票名称：{:^72}".format(gettitle(number)))
+                getstockvalue.getstockvalue(number)
+            elif number == "exit()":
+                i = 0
+                break
+            else:
+                print("warn:you should input a number!")
+        except:
+            pass
+
 if __name__ == "__main__":
     main()
