@@ -1,7 +1,6 @@
 # stock crawler by yangshuai
 import urllib.request
 import urllib.parse
-from bs4 import BeautifulSoup
 import re
 import getstockvalue
 
@@ -15,11 +14,11 @@ def gettitle(number):
     url = getstockurl(number)
     response = urllib.request.urlopen(url)
     html = response.read()
-    bsobj = BeautifulSoup(html, "html.parser")
-    title = bsobj.find("a", href=re.compile(
-        "ttp://stockpage.10jqka.com.cn/.+/")).strong.get_text()
+    html = html.decode('UTF-8', 'ignore')
+    b = re.search(
+        r'<strong>.+</strong>', html)
+    title = re.search(r'>.+<', b.group()).group()
     return title
-# def getvale(number):
 
 
 def main():
@@ -37,7 +36,7 @@ def main():
             else:
                 print("warn:you should input a number!")
         except:
-            pass
+            print("None data")
 
 if __name__ == "__main__":
     main()
