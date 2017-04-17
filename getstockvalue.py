@@ -1,4 +1,4 @@
-# getstockvalue.py
+# getstockvalue.py单个股票获得data和gif
 import urllib.request
 import urllib.parse
 import re
@@ -16,7 +16,14 @@ def stocknumber(number):
 
 
 def getstockurl(number):
-    url = "http://hq.sinajs.cn/list=" + stocknumber(number)
+    number = stocknumber(number)
+    url = "http://hq.sinajs.cn/list=" + number
+    return url
+
+
+def getstockgifurl(number):
+    number = stocknumber(number)
+    url = "http://image.sinajs.cn/newchart/daily/n/" + number + ".gif"
     return url
 
 
@@ -49,8 +56,17 @@ def getstockvalue(number):
     #     print(value)
 
 
+def getgif(number):
+    url = getstockgifurl(number)
+    response = urllib.request.urlopen(url)
+    stock_gif = response.read()
+    with open("stockgif.gif", "wb") as f:
+        f.write(stock_gif)
+
+
 def main():
     number = input("->请输入一个正确的股票代码：")
     getstockvalue(number)
+    getgif(number)
 if __name__ == "__main__":
     main()
