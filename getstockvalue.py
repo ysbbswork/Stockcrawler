@@ -2,6 +2,8 @@
 import urllib.request
 import urllib.parse
 import re
+import os
+import stockcrawler
 
 
 def stocknumber(number):
@@ -31,13 +33,13 @@ def format_info(data):
     # res = 'code: {data[1]} company: {data[2]} ' \
     #       'is checked: {dar}\n'.format(**data)
 
-    res = '=' * 84 + '\n'
-    res += '|今日开盘价：{0[1]:<6}|昨日收盘价：{0[2]:<6}|当前价格：{0[3]:<6}|今日最高价：{0[4]:<6}|今日最低价：{0[5]:<6}|\n'.format(
+    res = '=' * 69 + '\n'
+    res += '|今日开盘价：{0[1]:<6}\n|昨日收盘价：{0[2]:<6}\n|当前价格：{0[3]:<6}\n|今日最高价：{0[4]:<6}\n|今日最低价：{0[5]:<6}\n'.format(
         data)
-    res += '=' * 84 + '\n'
-    res += '|一笔竞买价：{0[6]:<6}|一笔竞卖价：{0[7]:<6}|成交股票数：{0[8]:<12}|成交金额：{0[9]:<12}\n'.format(
+    # res += '=' * 79 + '\n'
+    res += '|一笔竞买价：{0[6]:<6}\n|一笔竞卖价：{0[7]:<6}\n|成交股票数：{0[8]:<12}\n|成交金额：{0[9]:<12}\n'.format(
         data)
-    res += '=' * 84 + '\n'
+    res += '=' * 79 + '\n'
     return res
 
 
@@ -51,22 +53,28 @@ def getstockvalue(number):
     a = re.search(r'".+"', html)
     b = a.group()
     valuelist = b.split(",")
-    print(format_info(valuelist))
+    # print(format_info(valuelist))
     # for value in valuelist:
     #     print(value)
+    return format_info(valuelist)
 
 
 def getgif(number):
-    url = getstockgifurl(number)
-    response = urllib.request.urlopen(url)
-    stock_gif = response.read()
-    with open("stockgif.gif", "wb") as f:
-        f.write(stock_gif)
+    if os.path.exists("{0}.gif".format(number)) == True:
+        print("youla")
+        # pass
+    else:
+        url = getstockgifurl(number)
+        response = urllib.request.urlopen(url)
+        stock_gif = response.read()
+        with open("{0}.gif".format(number), "wb") as f:
+            f.write(stock_gif)
 
 
 def main():
     number = input("->请输入一个正确的股票代码：")
-    getstockvalue(number)
+    print(stockcrawler.getit(number))
+    print(getstockvalue(number))
     getgif(number)
 if __name__ == "__main__":
     main()

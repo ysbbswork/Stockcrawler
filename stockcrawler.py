@@ -2,11 +2,10 @@
 import urllib.request
 import urllib.parse
 import re
-import getstockvalue
 
 
 def getstockurl(number):
-    url = "http://stockpage.10jqka.com.cn/" + urllib.parse.quote(number)
+    url = "http://stockpage.10jqka.com.cn/" + str(number)
     return url
 
 
@@ -21,22 +20,21 @@ def gettitle(number):
     return title
 
 
-def main():
-    i = 1
-    while i == 1:
-        # try:
-        number = input("->请输入一个正确的股票代码：")
-        if str(number).isdigit():
-            print('=' * 84 + '\n' +
-                  "|股票名称：{:^72}".format(gettitle(number)))
-            getstockvalue.getstockvalue(number)
-        elif number == "exit()":
-            i = 0
-            break
-        else:
-            print("warn:you should input a number!")
+def getit(number):
+    # i = 1
+    # while i == 1:
+    #     # try:
+    #     number = input("->请输入一个正确的股票代码：")
+    if str(number).isdigit():
+        stocktitle = gettitle(number)
+        # getstockvalue.getstockvalue(number)
+        # elif number == "exit()":
+        #     i = 0
+        #     break
+    else:
+        print("warn:you should input a number!")
         # except :
-            # print("None data")
-
+        # print("None data")
+    return stocktitle
 if __name__ == "__main__":
-    main()
+    print(getit(600818))
