@@ -1,30 +1,19 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 import getstockvalue
-import stockcrawler
+import getallrank
 import os
 import sys
 
-try:
-    photo = None
-    from tkinter import *
-except ImportError:  # Python 2.x
-    PythonVersion = 2
-    from Tkinter import *
-    from tkFont import Font
-    from ttk import *
-    # Usage:showinfo/warning/error,askquestion/okcancel/yesno/retrycancel
-    from tkMessageBox import *
-    # Usage:f=tkFileDialog.askopenfilename(initialdir='E:/Python')
-    # import tkFileDialog
-    # import tkSimpleDialog
-else:  # Python 3.x
-    PythonVersion = 3
-    from tkinter.font import Font
-    from tkinter.ttk import *
-    from tkinter.messagebox import *
-    # import tkinter.filedialog as tkFileDialog
-    # import tkinter.simpledialog as tkSimpleDialog    #askstring()
+
+from tkinter import *
+PythonVersion = 3
+from tkinter.font import Font
+from tkinter.ttk import *
+from tkinter.messagebox import *
+# import tkinter.filedialog as tkFileDialog
+# import tkinter.simpledialog as tkSimpleDialog    #askstring()
+photo = None
 
 
 class Application_ui(Frame):
@@ -37,7 +26,7 @@ class Application_ui(Frame):
 
     def createWidgets(self):
         global photo
-        photo = PhotoImage(file=r"E:\yscode\Stockcrawler\wait.gif")
+        # photo = PhotoImage(file=r"E:\yscode\Stockcrawler\wait.gif")
         self.top = self.winfo_toplevel()
 
         self.style = Style()
@@ -106,56 +95,56 @@ class Application_ui(Frame):
         self.v.set(1)
         self.style.configure('Option9.TRadiobutton', font=('宋体', 9))
         self.Option9 = Radiobutton(
-            self.Frame1, text='沪市9股涨幅TOP10', variable=self.v, value=9, style='Option9.TRadiobutton')
-        self.Option9.place(relx=0.023, rely=0.785,
-                           relwidth=0.123, relheight=0.045)
+            self.Frame1, text='新股涨幅TOP', command=self.Optcommand9, variable=self.v, value=9, style='Option9.TRadiobutton')
+        self.Option9.place(relx=0.023, rely=0.86,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option8.TRadiobutton', font=('宋体', 9))
         self.Option8 = Radiobutton(
-            self.Frame1, text='沪市8股涨幅TOP10', variable=self.v, value=8, style='Option8.TRadiobutton')
-        self.Option8.place(relx=0.023, rely=0.7,
-                           relwidth=0.115, relheight=0.045)
+            self.Frame1, text='创业板涨幅TOP', command=self.Optcommand8, variable=self.v, value=8, style='Option8.TRadiobutton')
+        self.Option8.place(relx=0.023, rely=0.76,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option7.TRadiobutton', font=('宋体', 9))
         self.Option7 = Radiobutton(
-            self.Frame1, text='沪市7股涨幅TOP10', variable=self.v, value=7, style='Option7.TRadiobutton')
-        self.Option7.place(relx=0.023, rely=0.594,
-                           relwidth=0.115, relheight=0.066)
+            self.Frame1, text='中小板涨幅TOP', command=self.Optcommand7, variable=self.v, value=7, style='Option7.TRadiobutton')
+        self.Option7.place(relx=0.023, rely=0.66,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option6.TRadiobutton', font=('宋体', 9))
         self.Option6 = Radiobutton(
-            self.Frame1, text='沪市6股涨幅TOP10', variable=self.v, value=6, style='Option6.TRadiobutton')
-        self.Option6.place(relx=0.023, rely=0.509,
-                           relwidth=0.131, relheight=0.045)
+            self.Frame1, text='深市B股涨幅TOP', command=self.Optcommand6, variable=self.v, value=6, style='Option6.TRadiobutton')
+        self.Option6.place(relx=0.023, rely=0.56,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option5.TRadiobutton', font=('宋体', 9))
         self.Option5 = Radiobutton(
-            self.Frame1, text='沪市E股涨幅TOP10', variable=self.v, value=5, style='Option5.TRadiobutton')
-        self.Option5.place(relx=0.023, rely=0.403,
-                           relwidth=0.131, relheight=0.066)
+            self.Frame1, text='沪市B股涨幅TOP', variable=self.v, command=self.Optcommand5, value=5, style='Option5.TRadiobutton')
+        self.Option5.place(relx=0.023, rely=0.46,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option4.TRadiobutton', font=('宋体', 9))
         self.Option4 = Radiobutton(
-            self.Frame1, text='沪市D股涨幅TOP10', variable=self.v, value=4, style='Option4.TRadiobutton')
-        self.Option4.place(relx=0.023, rely=0.34,
-                           relwidth=0.123, relheight=0.045)
+            self.Frame1, text='深市A股涨幅TOP', variable=self.v, command=self.Optcommand4, value=4, style='Option4.TRadiobutton')
+        self.Option4.place(relx=0.023, rely=0.36,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option3.TRadiobutton', font=('宋体', 9))
         self.Option3 = Radiobutton(
-            self.Frame1, text='沪市C股涨幅TOP10', variable=self.v, value=3, style='Option3.TRadiobutton')
-        self.Option3.place(relx=0.023, rely=0.255,
-                           relwidth=0.123, relheight=0.066)
+            self.Frame1, text='沪市A股涨幅TOP', variable=self.v, command=self.Optcommand3, value=3, style='Option3.TRadiobutton')
+        self.Option3.place(relx=0.023, rely=0.26,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option2.TRadiobutton', font=('宋体', 9))
         self.Option2 = Radiobutton(
-            self.Frame1, text='沪市B股涨幅TOP10', variable=self.v, value=2, style='Option2.TRadiobutton')
-        self.Option2.place(relx=0.023, rely=0.17,
-                           relwidth=0.123, relheight=0.066)
+            self.Frame1, text='B股市场涨幅TOP', variable=self.v, command=self.Optcommand2, value=2, style='Option2.TRadiobutton')
+        self.Option2.place(relx=0.023, rely=0.16,
+                           relwidth=0.131, relheight=0.088)
 
         self.style.configure('Option1.TRadiobutton', font=('宋体', 9))
         self.Option1 = Radiobutton(
-            self.Frame1, text='沪市A股涨幅TOP10', variable=self.v, value=1, style='Option1.TRadiobutton')
-        self.Option1.place(relx=0.023, rely=0.064,
+            self.Frame1, text='A股市场涨幅TOP', variable=self.v, command=self.Optcommand1, value=1, style='Option1.TRadiobutton')
+        self.Option1.place(relx=0.023, rely=0.060,
                            relwidth=0.131, relheight=0.088)
 
         self.style.configure('Line1.TSeparator', background='#000000')
@@ -172,28 +161,84 @@ class Application(Application_ui):
 
     def Command1_Cmd(self, event=None):
         global photo
-
-        # TODO, Please finish the function here!
         # self.Text1.insert(INSERT, self.v.get())
         # self.Text1.insert(INSERT, self.Text3.get())
-        self.Text2.insert(
-            END, stockcrawler.getit(self.Text3.get()))
-        self.Text2.insert(
-            END, getstockvalue.getstockvalue(self.Text3.get()))
-        getstockvalue.getgif(self.Text3.get())
-        while True:
-            if os.path.exists(r"{0}.gif".format(self.Text3.get())) == True:
-                photo = PhotoImage(file=r"{0}.gif".format(self.Text3.get()))
-                self.Picture1.create_image(-25, 0, image=photo, anchor=NW)
-                break
-            else:
-                photo = PhotoImage(file=r"wait.gif")
-                self.Picture1.create_image(-25, 0, image=photo, anchor=NW)
-                continue
+        # self.Text2.insert(
+        #     END, stockcrawler.getit(self.Text3.get()))
+        if str(self.Text3.get()).isdigit():
+            self.Text2.insert(
+                END, getstockvalue.getstockvalue(self.Text3.get()))
+            getstockvalue.getgif(self.Text3.get())
+            while True:
+                breakyoo = 1
+                if os.path.exists(r"{0}.gif".format(self.Text3.get())) == True:
+                    photo = PhotoImage(file=r"{0}.gif".format(self.Text3.get()))
+                    self.Picture1.create_image(-20, 0, image=photo, anchor=NW)
+                    break
+                else:
+
+                    if breakyoo >= 5:
+                        break
+                    else:
+                        photo = PhotoImage(file=r"wait.gif")
+                        self.Picture1.create_image(-20, 0, image=photo, anchor=NW)
+                        breakyoo += 1
+                        continue
+        else:
+            self.Text2.insert(
+                END, "please input a stocknumber!\n")
+
         # except:
 
     def Command2_Cmd(self, event=None):
         self.Text2.delete(0.0, END)
+
+    def Optcommand9(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getranknew())
+
+    def Optcommand8(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getrankcyb())
+
+    def Optcommand7(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getrankzxb())
+
+    def Optcommand6(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getranksb())
+
+    def Optcommand5(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getrankhb())
+
+    def Optcommand4(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getranksa())
+
+    def Optcommand3(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getrankha())
+
+    def Optcommand2(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getrankb())
+
+    def Optcommand1(self):
+        self.Text1.delete(0.0, END)
+        self.Text1.insert(
+            END, getallrank.getranka())
+
+
 if __name__ == "__main__":
     top = Tk()
     Application(top).mainloop()
