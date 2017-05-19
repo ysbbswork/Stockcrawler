@@ -1,14 +1,19 @@
 # Yo!stock
 
-这是一个国内股票爬虫程序，利用新浪股票数据接口，和证券之星分类市场爬取股票。
+**这是一个国内股票爬虫程序，利用新浪股票数据接口，和证券之星分类市场爬取国内证券市场的股票信息。**
 
-完成基本的股票信息爬取，存储，和数据处理，每个模块完成相应的内容，程序使用python3.5，mysql数据库，简单的pandas数据处理。
+完成基本的股票信息爬取，存储，和数据处理，每个模块完成相应的内容，并写了完整的Tk界面。
+程序使用python3.5，mysql5.6数据库。
+
+使用到beautifulsoup、pymysql、pandas等第三方库。
 
 功能分为六部分，mysqlstockui.py为界面程序（也是主程序），其它五个分别为五个小程序模块，最后import到ui界面程序中完成全部程序。
 
-其它几个程序分别为：getstockvalue、getallrank、selectinsql、getallstock、pandasuse下面将分别介绍各模块功能和实现方法。
+其它几个程序分别为：ui、getstockvalue、getallrank、selectinsql、getallstock、pandasuse下面将分别介绍各模块功能和实现方法。
 
-## 主程序mysqlstockui.py
+## 主程序main.py
+
+## 界面ui.py
 
 功能简介：是用python内置的tkinter编写的界面，用来调用其它程序函数，并将各返回值传入UI界面上显示出来。
 
@@ -31,3 +36,5 @@
 ## 用户自定义排序pandasuse.py
 
 功能简介：程序pandasuse.py实现功能是从任意历史数据库中获取当日股票市场的所有股票信息，进行自定义排序。用到了第三方库pandas，第一步通过判断用户输入的历史日期，将指定日期数据从mysql中取出传入给pandas，第二步将数据库的char型数据整改成float型，第三步，然后根据传入参数对关键数据进行排序，最后将数据以表单形式返回
+
+最后，欢迎各路小伙伴一起来改进代码~
