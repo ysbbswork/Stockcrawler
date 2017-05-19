@@ -44,7 +44,6 @@ def format_info(data):
 
 def getstockvalue(number):
     valuenamelist = []
-
     url = getstockurl(number)
     response = urllib.request.urlopen(url)
     html = response.read()
@@ -53,11 +52,7 @@ def getstockvalue(number):
     b = a.group()
     # print(b)
     b = b[1:-1]
-    # print(b)
     valuelist = b.split(",")
-    # print(format_info(valuelist))
-    # for value in valuelist:
-    #     print(value)
     return format_info(valuelist)
 
 

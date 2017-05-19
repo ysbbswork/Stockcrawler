@@ -340,7 +340,7 @@ class Application_ui(Frame):
         self.TabStrip1__Tab6 = Frame(self.TabStrip1)
         self.style.configure('Label4.TLabel', anchor='w', font=('宋体', 9))
         self.Label4 = Label(
-            self.TabStrip1__Tab6, text='作者：杨帅、洛彧雯            电子与通信工程', style='Label4.TLabel')
+            self.TabStrip1__Tab6, text='作者：ysbbs  blog:ysbbs.cf', style='Label4.TLabel')
         self.Label4.place(relx=0.065, rely=0.235,
                           relwidth=0.609, relheight=0.1)
         self.style.configure('Label17.TLabel', anchor='w', font=('宋体', 9))

@@ -13,9 +13,8 @@ def format_info(databox, k):
     return res
 
 
-def getranka():  # A股市场
-    url1 = 'http://quote.stockstar.com/stock/ranklist_a.shtml'
-    html = urllib.request.urlopen(url1)
+def getrank(url, k):
+    html = urllib.request.urlopen(url)
     html = html.read().decode('gbk')  # 出现编码问题，解决
     bsobj = BeautifulSoup(html, "html.parser")
     databiglist = bsobj.findAll("td", {"class": "align_center "})
@@ -29,156 +28,65 @@ def getranka():  # A股市场
             databox.append(d.get_text())
 
     # for i in range(0, len(databox), 13):
-    res = format_info(databox, 13)
+    res = format_info(databox, k)
+    return(res)
+
+
+def getranka():  # A股市场
+    url = 'http://quote.stockstar.com/stock/ranklist_a.shtml'
+    res = getrank(url, 13)
     return(res)
 
 
 def getrankb():  # B股市场
-    url1 = 'http://quote.stockstar.com/stock/ranklist_b.shtml'
-    html = urllib.request.urlopen(url1)
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    bsobj = BeautifulSoup(html, "html.parser")
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-
-    # for i in range(0, len(databox), 13):
-    res = format_info(databox, 13)
+    url = 'http://quote.stockstar.com/stock/ranklist_b.shtml'
+    res = getrank(url, 13)
     return(res)
 
 
 def getrankha():  # 沪市A股
-    url1 = 'http://quote.stockstar.com/stock/sha.shtml'
-    html = urllib.request.urlopen(url1)
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    bsobj = BeautifulSoup(html, "html.parser")
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-
-    res = format_info(databox, 12)
+    url = 'http://quote.stockstar.com/stock/sha.shtml'
+    res = getrank(url, 12)
     return(res)
 
 
 def getranksa():  # 深市A股
-    url1 = 'http://quote.stockstar.com/stock/sza.shtml'
-    html = urllib.request.urlopen(url1)
-    bsobj = BeautifulSoup(html, "html.parser")
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-
-    res = format_info(databox, 12)
+    url = 'http://quote.stockstar.com/stock/sza.shtml'
+    res = getrank(url, 12)
     return(res)
 
 
 def getrankhb():  # 沪市B股
-    url1 = 'http://quote.stockstar.com/stock/shb.shtml'
-    html = urllib.request.urlopen(url1)
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    bsobj = BeautifulSoup(html, "html.parser")
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-
-    res = format_info(databox, 12)
+    url = 'http://quote.stockstar.com/stock/shb.shtml'
+    res = getrank(url, 12)
     return(res)
 
 
 def getranksb():  # 深市B股
-    url1 = 'http://quote.stockstar.com/stock/szb.shtml'
-    html = urllib.request.urlopen(url1)
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    bsobj = BeautifulSoup(html, "html.parser")
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-
-    res = format_info(databox, 12)
+    url = 'http://quote.stockstar.com/stock/szb.shtml'
+    res = getrank(url, 12)
     return(res)
 
 
 def getrankzxb():  # 中小板
-    url1 = 'http://quote.stockstar.com/stock/small.shtml'
-    html = urllib.request.urlopen(url1)
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    bsobj = BeautifulSoup(html, "html.parser")
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-
-    res = format_info(databox, 12)
+    url = 'http://quote.stockstar.com/stock/small.shtml'
+    res = getrank(url, 12)
     return(res)
 
 
 def getrankcyb():  # 创业板
-    url1 = 'http://quote.stockstar.com/stock/gem.shtml'
-    html = urllib.request.urlopen(url1)
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    bsobj = BeautifulSoup(html, "html.parser")
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-
-    res = format_info(databox, 12)
+    url = 'http://quote.stockstar.com/stock/gem.shtml'
+    res = getrank(url, 12)
     return(res)
 
 
 def getranknew():  # 新股
-    url1 = 'http://quote.stockstar.com/stock/ipo.shtml'
-    html = urllib.request.urlopen(url1)
-    html = html.read().decode('gbk')  # 出现编码问题，解决
-    bsobj = BeautifulSoup(html, "html.parser")
-    databiglist = bsobj.findAll("td", {"class": "align_center "})
-
-    databox = []
-    for data in databiglist:
-        datalist = data.next_siblings  # bsobj的兄弟标签，不包含自己
-        databox.append(data.get_text())
-        for d in datalist:
-            databox.append(d.get_text())
-    print(len(databox))
-    res = format_info(databox, 12)
+    url = 'http://quote.stockstar.com/stock/ipo.shtml'
+    res = getrank(url, 12)
     return(res)
 
 
 def main():
-    print(getranknew())
+    print(getrankb())
 if __name__ == "__main__":
     main()
